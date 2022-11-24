@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import './App.css'
+import { useEffect } from 'react'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+function App () {
+  let touchstartX = 0
+  let touchendX = 0
+
+  function checkDirection () {
+    if (touchendX < touchstartX) window.confirm('swiped left!')
+    if (touchendX > touchstartX) window.confirm('swiped right!')
+  }
+  function touchStart (e) {
+    touchstartX = e.changedTouches[0].screenX
+  }
+  function touchEnd (e) {
+    touchendX = e.changedTouches[0].screenX
+    checkDirection()
+  }
+
+  useEffect(() => {
+  window.addEventListener('touchstart',touchStart);
+  window.addEventListener('touchend',touchEnd);
+
+  // window.addEventListener('swiped-left',(e)=>{
+  //   window.alert('Swiped-left')
+  // })
+  // window.addEventListener('swiped-right',e=>{
+  //   window.alert('swiped-right')
+  // })
+  },[])
+  return <>This is the page</>
 }
 
-export default App;
+export default App
